@@ -26,4 +26,4 @@ jobs:
             - ~/.gradle
           key: v2-dependencies-{{ checksum "build.gradle.kts" }}-{{ checksum "settings.gradle.kts" }}
 
-      - run: ./gradlew build allTests
+      - run: ./gradlew build allTests installBinary
