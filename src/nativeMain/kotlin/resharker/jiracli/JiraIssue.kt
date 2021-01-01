@@ -1,3 +1,4 @@
+package resharker.jiracli
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

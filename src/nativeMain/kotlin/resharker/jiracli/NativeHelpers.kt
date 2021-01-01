@@ -1,3 +1,5 @@
+package resharker.jiracli
+
 import kotlinx.cinterop.toKString
 import platform.posix.getenv
 

@@ -1,3 +1,5 @@
+package resharker.jiracli
+
 import io.ktor.http.*
 import io.ktor.util.*
 import kotlinx.coroutines.*

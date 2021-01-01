@@ -37,7 +37,7 @@ kotlin {
     nativeTarget.apply {
         binaries {
             executable {
-                entryPoint = "main"
+                entryPoint = "resharker.jiracli.main"
             }
         }
     }
