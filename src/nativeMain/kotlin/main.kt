@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 import platform.posix.exit
 
 fun main(args: Array<String>) = runBlocking {
-    val jira = jiraClient() ?: run {
+    val jira = createJiraClient() ?: run {
         exit(1)
         return@runBlocking
     }
@@ -42,10 +42,10 @@ fun main(args: Array<String>) = runBlocking {
     exit(0)
 }
 
-fun jiraClient(): JiraClient? = runCatching {
+fun createJiraClient(): JiraClient? = runCatching {
     JiraClient(
         rootUrl = requireEnv("JIRA_ROOT").also { rootUrl ->
-            require(rootUrl.matches("https?://\\S+".toRegex())) {
+            require(isValidUrl(rootUrl)) {
                 "JIRA_ROOT should be a valid URL (https://myjira.atlassian.com)"
             }
         },
