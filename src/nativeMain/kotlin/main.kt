@@ -4,7 +4,10 @@ import kotlinx.coroutines.*
 import platform.posix.exit
 
 fun main(args: Array<String>) = runBlocking {
-    val jira = jiraClient() ?: return@runBlocking
+    val jira = jiraClient() ?: run {
+        exit(1)
+        return@runBlocking
+    }
     val jobs = mutableListOf<Job>()
 
     supervisorScope {
