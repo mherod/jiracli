@@ -2,46 +2,27 @@ package resharker.jiracli
 
 import io.ktor.http.*
 import io.ktor.util.*
-import kotlinx.coroutines.*
-import platform.posix.exit
 
-fun main(args: Array<String>) = runBlocking {
-    val jira = createJiraClient() ?: run {
-        exit(1)
-        return@runBlocking
-    }
-    val jobs = mutableListOf<Job>()
+fun main(args: Array<String>) = nativeMain {
+    val jira = requireNotNull(createJiraClient())
 
-    supervisorScope {
-
-        jobs += launch {
-            if (args.any { it == "issue" } && args.any { it == "summary" }) {
-                @Suppress("ConvertCallChainIntoSequence")
-                extractIssueKeys(args)
-                    .map { jira.getIssue(it) }
-                    .distinctBy(JiraIssue::id)
-                    .distinctBy(JiraIssue::key)
-                    .map { issue -> "${issue.key} ${issue.fields.summary}" }
-                    .distinct()
-                    .toList()
-                    .forEach(::println)
-            }
-        }
-
-        jobs += launch {
-            if (args.any { it == "projects" } && args.any { it == "dump" }) {
-                println(jira.listProjects())
-            }
-        }
+    if (args.any { it == "issue" } && args.any { it == "summary" }) {
+        @Suppress("ConvertCallChainIntoSequence")
+        extractIssueKeys(args)
+            .map { jira.getIssue(it) }
+            .distinctBy(JiraIssue::id)
+            .distinctBy(JiraIssue::key)
+            .map { issue -> "${issue.key} ${issue.fields.summary}" }
+            .distinct()
+            .toList()
+            .forEach(::println)
     }
 
-    while (jobs.any { it.isActive }) {
-        delay(100)
+    if (args.any { it == "projects" } && args.any { it == "dump" }) {
+        println(jira.listProjects())
     }
-    jobs.joinAll()
 
     jira.close()
-    exit(0)
 }
 
 fun createJiraClient(): JiraClient? = runCatching {
