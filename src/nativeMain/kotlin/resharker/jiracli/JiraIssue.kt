@@ -14,48 +14,48 @@ data class JiraIssue(
     @SerialName("key")
     val key: String,
     @SerialName("self")
-    val self: String
+    val self: String,
 ) {
     @Serializable
     data class Fields(
         @SerialName("aggregateprogress")
-        val aggregateprogress: Aggregateprogress,
+        val aggregateProgress: AggregateProgress?,
         @SerialName("aggregatetimeestimate")
-        val aggregatetimeestimate: Int,
+        val aggregatetimeestimate: Int? = null,
         @SerialName("aggregatetimeoriginalestimate")
-        val aggregatetimeoriginalestimate: Int,
+        val aggregatetimeoriginalestimate: Int? = null,
         @SerialName("aggregatetimespent")
-        val aggregatetimespent: String?,
+        val aggregatetimespent: String? = null,
         @SerialName("assignee")
-        val assignee: Assignee,
+        val assignee: Assignee? = null,
         @SerialName("attachment")
-        val attachment: List<String>,
+        val attachment: List<String> = emptyList(),
         @SerialName("comment")
-        val comment: Comment,
+        val comment: Comments = Comments(),
         @SerialName("components")
-        val components: List<String>,
+        val components: List<String> = emptyList(),
         @SerialName("created")
         val created: String,
         @SerialName("creator")
         val creator: Creator,
         @SerialName("description")
-        val description: String,
+        val description: String = "",
         @SerialName("duedate")
-        val duedate: String?,
+        val duedate: String? = null,
         @SerialName("environment")
-        val environment: String?,
+        val environment: String? = null,
         @SerialName("fixVersions")
-        val fixVersions: List<String>,
+        val fixVersions: List<String> = emptyList(),
         @SerialName("issuelinks")
-        val issuelinks: List<Issuelink>,
+        val issueLinks: List<IssueLink> = emptyList(),
         @SerialName("issuerestriction")
-        val issuerestriction: Issuerestriction,
+        val issueRestriction: IssueRestriction? = null,
         @SerialName("issuetype")
-        val issuetype: Issuetype,
+        val issueType: IssueType,
         @SerialName("labels")
-        val labels: List<String>,
+        val labels: List<String> = emptyList(),
         @SerialName("lastViewed")
-        val lastViewed: String?,
+        val lastViewed: String? = null,
         @SerialName("priority")
         val priority: Priority,
         @SerialName("progress")
@@ -65,48 +65,48 @@ data class JiraIssue(
         @SerialName("reporter")
         val reporter: Reporter,
         @SerialName("resolution")
-        val resolution: Resolution,
+        val resolution: Resolution?,
         @SerialName("resolutiondate")
-        val resolutiondate: String,
+        val resolutionDate: String? = null,
         @SerialName("security")
-        val security: String?,
+        val security: String? = null,
         @SerialName("status")
         val status: Status,
         @SerialName("statuscategorychangedate")
         val statuscategorychangedate: String,
         @SerialName("subtasks")
-        val subtasks: List<String>,
+        val subtasks: List<String> = emptyList(),
         @SerialName("summary")
-        val summary: String,
+        val summary: String = "",
         @SerialName("timeestimate")
-        val timeestimate: Int,
+        val timeestimate: Int? = null,
         @SerialName("timeoriginalestimate")
-        val timeoriginalestimate: Int,
+        val timeoriginalestimate: Int? = null,
         @SerialName("timespent")
-        val timespent: String?,
+        val timespent: String? = null,
         @SerialName("timetracking")
-        val timetracking: Timetracking,
+        val timeTracking: TimeTracking? = null,
         @SerialName("updated")
         val updated: String,
         @SerialName("versions")
-        val versions: List<String>,
+        val versions: List<String> = emptyList(),
         @SerialName("votes")
         val votes: Votes,
         @SerialName("watches")
         val watches: Watches,
         @SerialName("worklog")
-        val worklog: Worklog,
+        val worklog: Worklog?,
         @SerialName("workratio")
-        val workratio: Int
+        val workratio: Int? = null,
     ) {
         @Serializable
-        data class Aggregateprogress(
+        data class AggregateProgress(
             @SerialName("percent")
-            val percent: Int,
+            val percent: Int? = null,
             @SerialName("progress")
-            val progress: Int,
+            val progress: Int? = null,
             @SerialName("total")
-            val total: Int
+            val total: Int? = null,
         )
 
         @Serializable
@@ -124,7 +124,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("timeZone")
-            val timeZone: String
+            val timeZone: String,
         ) {
             @Serializable
             data class AvatarUrls(
@@ -135,20 +135,20 @@ data class JiraIssue(
                 @SerialName("32x32")
                 val x32: String,
                 @SerialName("48x48")
-                val x48: String
+                val x48: String,
             )
         }
 
         @Serializable
-        data class Comment(
+        data class Comments(
             @SerialName("comments")
-            val comments: List<String>,
+            val comments: List<String> = emptyList(),
             @SerialName("maxResults")
-            val maxResults: Int,
+            val maxResults: Int = 0,
             @SerialName("startAt")
-            val startAt: Int,
+            val startAt: Int = 0,
             @SerialName("total")
-            val total: Int
+            val total: Int = 0,
         )
 
         @Serializable
@@ -166,7 +166,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("timeZone")
-            val timeZone: String
+            val timeZone: String,
         ) {
             @Serializable
             data class AvatarUrls(
@@ -177,70 +177,12 @@ data class JiraIssue(
                 @SerialName("32x32")
                 val x32: String,
                 @SerialName("48x48")
-                val x48: String
+                val x48: String,
             )
         }
 
         @Serializable
-        data class Customfield10019(
-            @SerialName("boardId")
-            val boardId: Int,
-            @SerialName("completeDate")
-            val completeDate: String,
-            @SerialName("endDate")
-            val endDate: String,
-            @SerialName("goal")
-            val goal: String,
-            @SerialName("id")
-            val id: Int,
-            @SerialName("name")
-            val name: String,
-            @SerialName("startDate")
-            val startDate: String,
-            @SerialName("state")
-            val state: String
-        )
-
-        @Serializable
-        data class Customfield10308(
-            @SerialName("id")
-            val id: String,
-            @SerialName("self")
-            val self: String,
-            @SerialName("value")
-            val value: String
-        )
-
-        @Serializable
-        data class Customfield10309(
-            @SerialName("id")
-            val id: String,
-            @SerialName("self")
-            val self: String,
-            @SerialName("value")
-            val value: String
-        )
-
-        @Serializable
-        data class Customfield10900(
-            @SerialName("hasEpicLinkFieldDependency")
-            val hasEpicLinkFieldDependency: Boolean,
-            @SerialName("nonEditableReason")
-            val nonEditableReason: NonEditableReason,
-            @SerialName("showField")
-            val showField: Boolean
-        ) {
-            @Serializable
-            data class NonEditableReason(
-                @SerialName("message")
-                val message: String,
-                @SerialName("reason")
-                val reason: String
-            )
-        }
-
-        @Serializable
-        data class Issuelink(
+        data class IssueLink(
             @SerialName("id")
             val id: String,
             @SerialName("inwardIssue")
@@ -248,7 +190,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("type")
-            val type: Type
+            val type: Type,
         ) {
             @Serializable
             data class InwardIssue(
@@ -259,7 +201,7 @@ data class JiraIssue(
                 @SerialName("key")
                 val key: String,
                 @SerialName("self")
-                val self: String
+                val self: String,
             ) {
                 @Serializable
                 data class Fields(
@@ -270,12 +212,12 @@ data class JiraIssue(
                     @SerialName("status")
                     val status: Status,
                     @SerialName("summary")
-                    val summary: String
+                    val summary: String,
                 ) {
                     @Serializable
                     data class Issuetype(
                         @SerialName("avatarId")
-                        val avatarId: Int,
+                        val avatarId: Int? = null,
                         @SerialName("description")
                         val description: String,
                         @SerialName("iconUrl")
@@ -287,7 +229,7 @@ data class JiraIssue(
                         @SerialName("self")
                         val self: String,
                         @SerialName("subtask")
-                        val subtask: Boolean
+                        val subtask: Boolean,
                     )
 
                     @Serializable
@@ -299,7 +241,7 @@ data class JiraIssue(
                         @SerialName("name")
                         val name: String,
                         @SerialName("self")
-                        val self: String
+                        val self: String,
                     )
 
                     @Serializable
@@ -315,20 +257,20 @@ data class JiraIssue(
                         @SerialName("self")
                         val self: String,
                         @SerialName("statusCategory")
-                        val statusCategory: StatusCategory
+                        val statusCategory: StatusCategory,
                     ) {
                         @Serializable
                         data class StatusCategory(
                             @SerialName("colorName")
                             val colorName: String,
                             @SerialName("id")
-                            val id: Int,
+                            val id: Int? = null,
                             @SerialName("key")
                             val key: String,
                             @SerialName("name")
                             val name: String,
                             @SerialName("self")
-                            val self: String
+                            val self: String,
                         )
                     }
                 }
@@ -345,26 +287,25 @@ data class JiraIssue(
                 @SerialName("outward")
                 val outward: String,
                 @SerialName("self")
-                val self: String
+                val self: String,
             )
         }
 
         @Serializable
-        data class Issuerestriction(
+        data class IssueRestriction(
             @SerialName("issuerestrictions")
             val issuerestrictions: Issuerestrictions,
             @SerialName("shouldDisplay")
-            val shouldDisplay: Boolean
+            val shouldDisplay: Boolean,
         ) {
             @Serializable
-            class Issuerestrictions(
-            )
+            class Issuerestrictions
         }
 
         @Serializable
-        data class Issuetype(
+        data class IssueType(
             @SerialName("avatarId")
-            val avatarId: Int,
+            val avatarId: Int? = null,
             @SerialName("description")
             val description: String,
             @SerialName("iconUrl")
@@ -376,7 +317,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("subtask")
-            val subtask: Boolean
+            val subtask: Boolean,
         )
 
         @Serializable
@@ -388,17 +329,17 @@ data class JiraIssue(
             @SerialName("name")
             val name: String,
             @SerialName("self")
-            val self: String
+            val self: String,
         )
 
         @Serializable
         data class Progress(
             @SerialName("percent")
-            val percent: Int,
+            val percent: Int? = null,
             @SerialName("progress")
-            val progress: Int,
+            val progress: Int? = null,
             @SerialName("total")
-            val total: Int
+            val total: Int? = null,
         )
 
         @Serializable
@@ -416,7 +357,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("simplified")
-            val simplified: Boolean
+            val simplified: Boolean,
         ) {
             @Serializable
             data class AvatarUrls(
@@ -427,7 +368,7 @@ data class JiraIssue(
                 @SerialName("32x32")
                 val x32: String,
                 @SerialName("48x48")
-                val x48: String
+                val x48: String,
             )
         }
 
@@ -446,7 +387,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("timeZone")
-            val timeZone: String
+            val timeZone: String,
         ) {
             @Serializable
             data class AvatarUrls(
@@ -457,7 +398,7 @@ data class JiraIssue(
                 @SerialName("32x32")
                 val x32: String,
                 @SerialName("48x48")
-                val x48: String
+                val x48: String,
             )
         }
 
@@ -470,7 +411,7 @@ data class JiraIssue(
             @SerialName("name")
             val name: String,
             @SerialName("self")
-            val self: String
+            val self: String,
         )
 
         @Serializable
@@ -486,33 +427,33 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("statusCategory")
-            val statusCategory: StatusCategory
+            val statusCategory: StatusCategory,
         ) {
             @Serializable
             data class StatusCategory(
                 @SerialName("colorName")
                 val colorName: String,
                 @SerialName("id")
-                val id: Int,
+                val id: Int? = null,
                 @SerialName("key")
                 val key: String,
                 @SerialName("name")
                 val name: String,
                 @SerialName("self")
-                val self: String
+                val self: String,
             )
         }
 
         @Serializable
-        data class Timetracking(
+        data class TimeTracking(
             @SerialName("originalEstimate")
-            val originalEstimate: String,
+            val originalEstimate: String? = null,
             @SerialName("originalEstimateSeconds")
-            val originalEstimateSeconds: Int,
+            val originalEstimateSeconds: Int? = null,
             @SerialName("remainingEstimate")
-            val remainingEstimate: String,
+            val remainingEstimate: String? = null,
             @SerialName("remainingEstimateSeconds")
-            val remainingEstimateSeconds: Int
+            val remainingEstimateSeconds: Int? = null,
         )
 
         @Serializable
@@ -522,7 +463,7 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("votes")
-            val votes: Int
+            val votes: Int? = null,
         )
 
         @Serializable
@@ -532,19 +473,19 @@ data class JiraIssue(
             @SerialName("self")
             val self: String,
             @SerialName("watchCount")
-            val watchCount: Int
+            val watchCount: Int? = null,
         )
 
         @Serializable
         data class Worklog(
             @SerialName("maxResults")
-            val maxResults: Int,
+            val maxResults: Int = 0,
             @SerialName("startAt")
-            val startAt: Int,
+            val startAt: Int = 0,
             @SerialName("total")
-            val total: Int,
+            val total: Int = 0,
             @SerialName("worklogs")
-            val worklogs: List<String>
+            val worklogs: List<String> = emptyList(),
         )
     }
 }
