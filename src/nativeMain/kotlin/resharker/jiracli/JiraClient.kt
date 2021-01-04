@@ -1,29 +1,18 @@
 package resharker.jiracli
 
 import io.ktor.client.*
-import io.ktor.client.engine.curl.*
 import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
-import kotlinx.serialization.json.Json as JsonConfig
 
 class JiraClient(
-    private val httpClient: HttpClient = HttpClient(Curl) {
-        engine {
-        }
-
+    private val httpClient: HttpClient = HttpClient {
         install(JsonFeature) {
-            serializer = KotlinxSerializer(JsonConfig {
-                isLenient = true
-                ignoreUnknownKeys = true
-                allowSpecialFloatingPointValues = true
-                useArrayPolymorphism = false
-            })
+            serializer = jsonSerializer()
         }
     },
     private val rootUrl: String,
     private val credentials: JiraCredentials,
-) {
+) : IJiraClient {
 
     private fun HttpRequestBuilder.configRequest() {
         credentials.apply {
@@ -31,22 +20,25 @@ class JiraClient(
         }
     }
 
-    suspend fun listProjects(): ArrayList<JiraProject.JiraProjectItem> = httpClient.request {
+    override suspend fun listProjects(): ArrayList<JiraProject.JiraProjectItem> = httpClient.request {
         url("$rootUrl/rest/api/2/project")
         configRequest()
     }
 
-    suspend fun getProject(id: String): JiraProject.JiraProjectItem = httpClient.request {
+    override suspend fun getProject(id: String): JiraProject.JiraProjectItem = httpClient.request {
         url("$rootUrl/rest/api/2/project/${id}")
         configRequest()
     }
 
-    suspend fun getIssue(key: String): JiraIssue = httpClient.request {
-        url("$rootUrl/rest/api/2/issue/${key}")
-        configRequest()
+    override suspend fun getIssue(key: String): JiraIssue {
+        key requireMatch issueKeyRegex
+        return httpClient.request {
+            url("$rootUrl/rest/api/2/issue/${key}")
+            configRequest()
+        }
     }
 
-    fun close() {
+    override fun close() {
         httpClient.close()
     }
 }

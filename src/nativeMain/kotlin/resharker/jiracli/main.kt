@@ -4,7 +4,7 @@ import io.ktor.http.*
 import io.ktor.util.*
 
 fun main(args: Array<String>) = nativeMain {
-    val jira = requireNotNull(createJiraClient())
+    val jira: JiraClient = createJiraClient() ?: error("Couldn't init Jira client")
 
     if (args.any { it == "issue" } && args.any { it == "summary" }) {
         @Suppress("ConvertCallChainIntoSequence")
@@ -41,8 +41,9 @@ fun createJiraClient(): JiraClient? = runCatching {
     println(throwable.message)
 }.getOrNull()
 
-private fun extractIssueKeys(args: Array<String>) =
-    args.mapNotNull { arg -> "(\\w{1,5}+-\\d{1,5},?)+".toRegex().matchEntire(arg)?.groupValues }.flatten().distinct()
+private fun extractIssueKeys(args: Array<String>): List<String> {
+    return args.mapNotNull { arg -> issueKeyRegex.toRegex().matchEntire(arg)?.groupValues }.flatten().distinct()
+}
 
 @OptIn(InternalAPI::class)
 private inline fun apiTokenCredentials(
